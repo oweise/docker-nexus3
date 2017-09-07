@@ -16,7 +16,7 @@
 
 -->
 
-# Sonatype Nexus3 Docker: sonatype/nexus3
+# Sonatype Nexus3 for OpenShift: kisaro247/docker-nexus3
 
 [![Join the chat at https://gitter.im/sonatype/nexus-developers](https://badges.gitter.im/sonatype/nexus-developers.svg)](https://gitter.im/sonatype/nexus-developers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -28,6 +28,18 @@ A Dockerfile for Sonatype Nexus Repository Manager 3, based on CentOS.
   * [Persistent Data](#persistent-data)
   * [Build Args](#build-args)
 * [Getting Help](#getting-help)
+
+## Additions on this fork
+
+This fork is an OpenShift-compatible version of the sonatype/nexus3 image,
+mainly shipping around the fact that OpenShift runs container processes with
+a random high-id user instead of what the Dockerfile may say. To support that
+the following modifications were done:
+
+- On ENTRYPOINT add the current user to the /etc/passwd, mainly to set her
+home directory. That way Nexus can write to its Java prefs, which are stored
+under this user home.
+- Modify file permissions, so this high-id is able to write to ${NEXUS_DATA} plus /etc/passwd
 
 ## Contribution Guidelines
 
